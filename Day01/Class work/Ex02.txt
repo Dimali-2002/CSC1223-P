@@ -1,0 +1,58 @@
+MariaDB [UOV]> CREATE TABLE Physician(PhysicianId CHAR(3),Name VARCHAR(20),Position VARCHAR(30));
+Query OK, 0 rows affected (0.011 sec)
+
+MariaDB [UOV]> SELECT * FROM Physician;
+Empty set (0.001 sec)
+
+MariaDB [UOV]> DESC Physician;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| PhysicianId | char(3)     | YES  |     | NULL    |       |
+| Name        | varchar(20) | YES  |     | NULL    |       |
+| Position    | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.013 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('1','John Dorian','Staff Internist');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> select * from Physician;
++-------------+-------------+-----------------+
+| PhysicianId | Name        | Position        |
++-------------+-------------+-----------------+
+| 1           | John Dorian | Staff Internist |
++-------------+-------------+-----------------+
+1 row in set (0.000 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('2','Elliot Reid','Attending Physician');
+Query OK, 1 row affected (0.003 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('3','Christopher Turk','Surgical Attending Physician');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('4','Percival Cox','Senior Attending Physician');
+Query OK, 1 row affected (0.004 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('5','Keith Dudemeister','MID Resident');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [UOV]> INSERT INTO Physician VALUES('6','Molly Clock','Attending Psychiatrist');
+Query OK, 1 row affected (0.002 sec)
+
+MariaDB [UOV]> SELECT * FROM Physician;
++-------------+-------------------+------------------------------+
+| PhysicianId | Name              | Position                     |
++-------------+-------------------+------------------------------+
+| 1           | John Dorian       | Staff Internist              |
+| 2           | Elliot Reid       | Attending Physician          |
+| 3           | Christopher Turk  | Surgical Attending Physician |
+| 4           | Percival Cox      | Senior Attending Physician   |
+| 5           | Keith Dudemeister | MID Resident                 |
+| 6           | Molly Clock       | Attending Psychiatrist       |
++-------------+-------------------+------------------------------+
+6 rows in set (0.000 sec)
+
+
+Conclusion:
+Learned about how to create table and include data.
