@@ -1,0 +1,143 @@
+Setting environment for using XAMPP for Windows.
+Dimali@DESKTOP-PFQRD0Q c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+5 rows in set (0.094 sec)
+
+MariaDB [(none)]> CREATE DATABASE hospital;
+Query OK, 1 row affected (0.027 sec)
+
+MariaDB [(none)]> USE hospital;
+Database changed
+MariaDB [hospital]> CREATE TABLE physician(PhysicianID INT, Name VARCHAR(30), Position VARCHAR(30));
+Query OK, 0 rows affected (0.268 sec)
+
+MariaDB [hospital]> DESC physician;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| PhysicianID | int(11)     | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
+| Position    | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.038 sec)
+
+MariaDB [hospital]> INSERT INTO physician VALUES(1,'John Dorian','Staf Internist');
+Query OK, 1 row affected (0.154 sec)
+
+MariaDB [hospital]> INSERT INTO physician VALUES(2,'Elliot Reid','Attending Physician'),(3,'Christopher Turk','Surgical Attending Physician');
+Query OK, 2 rows affected (0.176 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> INSERT INTO physician VALUES(4,'Percival Cox','Senior Attending Physician'),(5,'Keith Dudemeister','MD Resident');
+Query OK, 2 rows affected (0.214 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> INSERT INTO physician VALUES(6,'Molly Clock','Attending Physician');
+Query OK, 1 row affected (0.094 sec)
+
+MariaDB [hospital]> SELECT * FROM physician;
++-------------+-------------------+------------------------------+
+| PhysicianID | Name              | Position                     |
++-------------+-------------------+------------------------------+
+|           1 | John Dorian       | Staf Internist               |
+|           2 | Elliot Reid       | Attending Physician          |
+|           3 | Christopher Turk  | Surgical Attending Physician |
+|           4 | Percival Cox      | Senior Attending Physician   |
+|           5 | Keith Dudemeister | MD Resident                  |
+|           6 | Molly Clock       | Attending Physician          |
++-------------+-------------------+------------------------------+
+6 rows in set (0.134 sec)
+
+MariaDB [hospital]> CREATE TABLE patient (Patientid INT PRIMARY KEY,Name VARCHAR(30),Address VARCHAR(40),Phone VARCHAR(15));
+Query OK, 0 rows affected (0.394 sec)
+
+MariaDB [hospital]> DESC patient;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| Patientid | int(11)     | NO   | PRI | NULL    |       |
+| Name      | varchar(30) | YES  |     | NULL    |       |
+| Address   | varchar(40) | YES  |     | NULL    |       |
+| Phone     | varchar(15) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.010 sec)
+
+MariaDB [hospital]> INSERT INTO patient VALUES (100000001,'John Smith','42 Foobar Lane','555-0256'),(100000002,'Grace Ritchie','37 Snafu Drive','555-0512'),(100000003,'Todd Quinlan','101 Omgbbq Street','555-1204'),(100000004,'Dennis Doe','1100 Foobaz Avenue','555-2048');
+Query OK, 4 rows affected (0.164 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [hospital]> SELECT * FROM patient;
++-----------+---------------+--------------------+----------+
+| Patientid | Name          | Address            | Phone    |
++-----------+---------------+--------------------+----------+
+| 100000001 | John Smith    | 42 Foobar Lane     | 555-0256 |
+| 100000002 | Grace Ritchie | 37 Snafu Drive     | 555-0512 |
+| 100000003 | Todd Quinlan  | 101 Omgbbq Street  | 555-1204 |
+| 100000004 | Dennis Doe    | 1100 Foobaz Avenue | 555-2048 |
++-----------+---------------+--------------------+----------+
+4 rows in set (0.001 sec)
+
+MariaDB [hospital]> CREATE TABLE doctor;
+ERROR 1113 (42000): A table must have at least 1 column
+MariaDB [hospital]> create table doctor(name VARCHAR(90));
+Query OK, 0 rows affected (0.383 sec)
+
+MariaDB [hospital]> show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| doctor             |
+| patient            |
+| physician          |
++--------------------+
+3 rows in set (0.030 sec)
+
+MariaDB [hospital]> INSERT INTO doctor VALUES('NIMAL');
+Query OK, 1 row affected (0.159 sec)
+
+MariaDB [hospital]> select * from doctor;
++-------+
+| name  |
++-------+
+| NIMAL |
++-------+
+1 row in set (0.001 sec)
+
+MariaDB [hospital]> TRUNCATE table doctor;
+Query OK, 0 rows affected (0.630 sec)
+
+MariaDB [hospital]> select * from doctor;
+Empty set (0.001 sec)
+
+MariaDB [hospital]> DROP table doctor;
+Query OK, 0 rows affected (0.338 sec)
+
+MariaDB [hospital]> show tables;
++--------------------+
+| Tables_in_hospital |
++--------------------+
+| patient            |
+| physician          |
++--------------------+
+2 rows in set (0.002 sec)
+
+Conclusion:- Learned about how to drop or truncate table
