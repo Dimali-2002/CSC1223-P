@@ -1,0 +1,5 @@
+LOAD DATA LOCAL INFILE 'C:/Users/nimesh/Desktop/Database/Day02.csv'
+INTO TABLE doctor
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+(id,name,age,grade,city);
