@@ -136,3 +136,4 @@ MariaDB [companies]> SELECT name FROM employees WHERE city IN ('New York','Chica
 +---------+
 4 rows in set (0.000 sec)
 
+Conclusion:- Learned about more SQL database creation
