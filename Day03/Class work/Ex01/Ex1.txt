@@ -432,3 +432,4 @@ MariaDB [hospital]> SELECT name AS student_name FROM students;
 +--------------+
 6 rows in set (0.001 sec)
 
+Conclusion:- Learned about more SQL key words.
