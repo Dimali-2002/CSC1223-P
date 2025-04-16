@@ -147,4 +147,4 @@ Rows matched: 5  Changed: 5  Warnings: 0
 MariaDB [store]> DELETE FROM customer WHERE Customer_id=3;
 Query OK, 1 row affected (0.004 sec)
 
-
+Conclusion:- Learned about more SQL database creation
