@@ -1,0 +1,327 @@
+Setting environment for using XAMPP for Windows.
+2022asp21@CL2-13 c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 10.4.32-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| a                  |
+| agriharvestnexus   |
+| bfl                |
+| bookdb             |
+| company            |
+| csc1223            |
+| day03              |
+| day3               |
+| details            |
+| hospital           |
+| ica02              |
+| ica2               |
+| information_schema |
+| inventory          |
+| kkl                |
+| library            |
+| librarydb          |
+| movies             |
+| mysql              |
+| new                |
+| parking            |
+| performance_schema |
+| phpmyadmin         |
+| phy                |
+| student            |
+| studentdb          |
+| studentsdb         |
+| test               |
+| uov                |
+| web                |
++--------------------+
+30 rows in set (0.062 sec)
+
+MariaDB [(none)]> USE company;
+Database changed
+MariaDB [company]> CREATE TABLE Sales (Sale_ID INT PRIMARY KEY,Salesperson VARCHAR(20),Region VARCHAR(20),Sale_Amount INT(10),Sale_Date DATE);
+Query OK, 0 rows affected (0.010 sec)
+
+MariaDB [company]> INSERT INTO Sales VALUES(1,'Alice','North',1200,'2024-12-01'),(2,'Bob','South',800,'2024-12-01'),(3,'Alice','North',1500,'2024-12-02'),(4,'Carol','East',700,'2024-12-02'),(5,'Dave','West',2000,'2024-12-03'),(6,'Bob','South',950,'2024-12-03'),(7,'Carol','East',1300,'2024-12-04');
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+MariaDB [company]> select * from Sales;
++---------+-------------+--------+-------------+------------+
+| Sale_ID | Salesperson | Region | Sale_Amount | Sale_Date  |
++---------+-------------+--------+-------------+------------+
+|       1 | Alice       | North  |        1200 | 2024-12-01 |
+|       2 | Bob         | South  |         800 | 2024-12-01 |
+|       3 | Alice       | North  |        1500 | 2024-12-02 |
+|       4 | Carol       | East   |         700 | 2024-12-02 |
+|       5 | Dave        | West   |        2000 | 2024-12-03 |
+|       6 | Bob         | South  |         950 | 0000-00-00 |
+|       7 | Carol       | East   |        1300 | 2024-12-04 |
++---------+-------------+--------+-------------+------------+
+7 rows in set (0.000 sec)
+
+MariaDB [company]> UPDATE Sales set Sale_Date='2024-12-03' where  Sale_ID=6;
+Query OK, 1 row affected (0.004 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+MariaDB [company]> select * from Sales;
++---------+-------------+--------+-------------+------------+
+| Sale_ID | Salesperson | Region | Sale_Amount | Sale_Date  |
++---------+-------------+--------+-------------+------------+
+|       1 | Alice       | North  |        1200 | 2024-12-01 |
+|       2 | Bob         | South  |         800 | 2024-12-01 |
+|       3 | Alice       | North  |        1500 | 2024-12-02 |
+|       4 | Carol       | East   |         700 | 2024-12-02 |
+|       5 | Dave        | West   |        2000 | 2024-12-03 |
+|       6 | Bob         | South  |         950 | 2024-12-03 |
+|       7 | Carol       | East   |        1300 | 2024-12-04 |
++---------+-------------+--------+-------------+------------+
+7 rows in set (0.000 sec)
+
+MariaDB [company]> ALTER TABLE Sales
+    -> MODIFY Sale_Amount DECIMAL;
+Query OK, 7 rows affected (0.040 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [company]> DESC Sales;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| Sale_ID     | int(11)       | NO   | PRI | NULL    |       |
+| Salesperson | varchar(20)   | YES  |     | NULL    |       |
+| Region      | varchar(20)   | YES  |     | NULL    |       |
+| Sale_Amount | decimal(10,0) | YES  |     | NULL    |       |
+| Sale_Date   | date          | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+5 rows in set (0.016 sec)
+
+MariaDB [company]> ALTER TABLE Sales
+    -> MODIFY Sale_Amount DECIMAL(10,2);
+Query OK, 7 rows affected (0.039 sec)
+Records: 7  Duplicates: 0  Warnings: 0
+
+MariaDB [company]> DESC Sales;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| Sale_ID     | int(11)       | NO   | PRI | NULL    |       |
+| Salesperson | varchar(20)   | YES  |     | NULL    |       |
+| Region      | varchar(20)   | YES  |     | NULL    |       |
+| Sale_Amount | decimal(10,2) | YES  |     | NULL    |       |
+| Sale_Date   | date          | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+5 rows in set (0.017 sec)
+
+MariaDB [company]> SELECT SUM(Sale_Amount) AS Total_Sale_Amount FROM Sales;
++-------------------+
+| Total_Sale_Amount |
++-------------------+
+|           8450.00 |
++-------------------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT COUNT(Sale_ID) FROM Sales;
++----------------+
+| COUNT(Sale_ID) |
++----------------+
+|              7 |
++----------------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT AVG(Sale_Amount) FROM Sales;
++------------------+
+| AVG(Sale_Amount) |
++------------------+
+|      1207.142857 |
++------------------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT MAX(Sale_Amount) FROM Sales;
++------------------+
+| MAX(Sale_Amount) |
++------------------+
+|          2000.00 |
++------------------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT MIN(Sale_Amount) FROM Sales;
++------------------+
+| MIN(Sale_Amount) |
++------------------+
+|           700.00 |
++------------------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT Salesperson,COUNT(*)
+    -> FROM Sales
+    -> GROUP BY Salesperson;
++-------------+----------+
+| Salesperson | COUNT(*) |
++-------------+----------+
+| Alice       |        2 |
+| Bob         |        2 |
+| Carol       |        2 |
+| Dave        |        1 |
++-------------+----------+
+4 rows in set (0.001 sec)
+
+MariaDB [company]> SELECT Region, SUM(Sale_Amount) AS total
+    -> FROM Sales
+    -> GROUP BY Region;
++--------+---------+
+| Region | total   |
++--------+---------+
+| East   | 2000.00 |
+| North  | 2700.00 |
+| South  | 1750.00 |
+| West   | 2000.00 |
++--------+---------+
+4 rows in set (0.000 sec)
+
+MariaDB [company]> SELECT Region, SUM(Sale_Amount) AS total_sale_amount
+    -> FROM Sales
+    -> GROUP BY Region
+    -> HAVING SUM(Sale_Amount)>2000;
++--------+-------------------+
+| Region | total_sale_amount |
++--------+-------------------+
+| North  |           2700.00 |
++--------+-------------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> SELECT COUNT(DISTINCT Salesperson) FROM Sales;
++-----------------------------+
+| COUNT(DISTINCT Salesperson) |
++-----------------------------+
+|                           4 |
++-----------------------------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT Salesperson, SUM(Sale_Amount) AS Total
+    -> FROM Sales
+    -> WHERE Salesperson='Alice';
++-------------+---------+
+| Salesperson | Total   |
++-------------+---------+
+| Alice       | 2700.00 |
++-------------+---------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT Region, AVG(Sale_Amount)
+    -> FROM Sales
+    -> GROUP BY Region;
++--------+------------------+
+| Region | AVG(Sale_Amount) |
++--------+------------------+
+| East   |      1000.000000 |
+| North  |      1350.000000 |
+| South  |       875.000000 |
+| West   |      2000.000000 |
++--------+------------------+
+4 rows in set (0.001 sec)
+
+MariaDB [company]> SELECT Sale_Date, COUNT(*) AS Transactions
+    -> FROM Sales
+    -> GROUP BY Sale_Date;
++------------+--------------+
+| Sale_Date  | Transactions |
++------------+--------------+
+| 2024-12-01 |            2 |
+| 2024-12-02 |            2 |
+| 2024-12-03 |            2 |
+| 2024-12-04 |            1 |
++------------+--------------+
+4 rows in set (0.000 sec)
+
+MariaDB [company]> SELECT Salesperson, Sale_Amount
+    -> FROM Sales
+    -> ORDER BY Sale_Amount DESC
+    -> LIMIT 1;
++-------------+-------------+
+| Salesperson | Sale_Amount |
++-------------+-------------+
+| Dave        |     2000.00 |
++-------------+-------------+
+1 row in set (0.000 sec)
+
+MariaDB [company]> SELECT Salesperson
+    -> FROM Sales
+    -> GROUP BY Salesperson
+    -> HAVING COUNT(Salesperson)>1;
++-------------+
+| Salesperson |
++-------------+
+| Alice       |
+| Bob         |
+| Carol       |
++-------------+
+3 rows in set (0.000 sec)
+
+MariaDB [company]> SELECT Region, COUNT(Sale_Amount) AS Sales_Count
+    -> FROM Sales
+    -> GROUP BY Region
+    -> ORDER BY Sale_Amount DESC
+    -> LIMIT 1;
++--------+-------------+
+| Region | Sales_Count |
++--------+-------------+
+| West   |           1 |
++--------+-------------+
+1 row in set (0.001 sec)
+
+MariaDB [company]> SELECT DISTINCT Region FROM Sales;
++--------+
+| Region |
++--------+
+| North  |
+| South  |
+| East   |
+| West   |
++--------+
+4 rows in set (0.001 sec)
+
+MariaDB [company]> SELECT SUM(Sale_Amount), Salesperson
+    -> FROM Sales
+    -> GROUP BY Salesperson
+    -> ORDER BY sum(Sale_Amount) DESC;
++------------------+-------------+
+| SUM(Sale_Amount) | Salesperson |
++------------------+-------------+
+|          2700.00 | Alice       |
+|          2000.00 | Carol       |
+|          2000.00 | Dave        |
+|          1750.00 | Bob         |
++------------------+-------------+
+4 rows in set (0.001 sec)
+
+MariaDB [company]> SELECT Salesperson, AVG(Sale_Amount) AS AVG_Amount
+    -> FROM Sales
+    -> GROUP BY Salesperson
+    -> HAVING AVG_Amount>1000;
++-------------+-------------+
+| Salesperson | AVG_Amount  |
++-------------+-------------+
+| Alice       | 1350.000000 |
+| Dave        | 2000.000000 |
++-------------+-------------+
+2 rows in set (0.001 sec)
+
+MariaDB [company]> SELECT Region, COUNT(Sale_Amount) AS Sales_count
+    -> FROM Sales
+    -> WHERE Sale_Date='2024-12-03'
+    -> GROUP BY Region;
++--------+-------------+
+| Region | Sales_count |
++--------+-------------+
+| South  |           1 |
+| West   |           1 |
++--------+-------------+
+2 rows in set (0.001 sec)
