@@ -1,0 +1,119 @@
+MariaDB [shop]> CREATE TABLE Student(StudentID INT PRIMARY KEY, Fname VARCHAR(30), Lname VARCHAR(30), City VARCHAR(30));
+Query OK, 0 rows affected (0.012 sec)
+
+MariaDB [shop]> DESC student;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| StudentID | int(11)     | NO   | PRI | NULL    |       |
+| Fname     | varchar(30) | YES  |     | NULL    |       |
+| Lname     | varchar(30) | YES  |     | NULL    |       |
+| City      | varchar(30) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+4 rows in set (0.016 sec)
+
+MariaDB [shop]> INSERT INTO Student Values
+    -> (1, 'Devine', 'Putin', 'France'),
+    -> (2, 'Michael', 'Clark', 'Australia'),
+    -> (3, 'Ethon', 'Miller', 'England'),
+    -> (4, 'Mark', 'Strauss', 'America');
+Query OK, 4 rows affected (0.003 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [shop]> SELECT * FROM Student;
++-----------+---------+---------+-----------+
+| StudentID | Fname   | Lname   | City      |
++-----------+---------+---------+-----------+
+|         1 | Devine  | Putin   | France    |
+|         2 | Michael | Clark   | Australia |
+|         3 | Ethon   | Miller  | England   |
+|         4 | Mark    | Strauss | America   |
++-----------+---------+---------+-----------+
+4 rows in set (0.000 sec)
+
+MariaDB [shop]> CREATE TABLE Technologies(StudentID INT, tech_ID INT PRIMARY KEY, Name VARCHAR(30), technology VARCHAR (30));
+Query OK, 0 rows affected (0.012 sec)
+
+MariaDB [shop]> DESC technologies;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| StudentID  | int(11)     | YES  |     | NULL    |       |
+| tech_ID    | int(11)     | NO   | PRI | NULL    |       |
+| Name       | varchar(30) | YES  |     | NULL    |       |
+| technology | varchar(30) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+4 rows in set (0.015 sec)
+
+MariaDB [shop]> INSERT INTO technologies VALUES
+    -> (1, 1, 'Java Training Inst.', 'Java'),
+    -> (2, 2, 'Chroma Campus', 'Angular'),
+    -> (3, 3, 'CETPA Infotech', 'Big data'),
+    -> (5, 4, 'Aptron', 'IOS'),
+	-> (6, 5, 'Faizabad', 'MongoDB');
+Query OK, 4 rows affected (0.005 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [shop]> SELECT * FROM technologies;
++-----------+---------+---------------------+------------+
+| StudentID | tech_ID | Name                | technology |
++-----------+---------+---------------------+------------+
+|         1 |       1 | Java Training Inst. | Java       |
+|         2 |       2 | Chroma Campus       | Angular    |
+|         3 |       3 | CETPA Infotech      | Big data   |
+|         5 |       4 | Aptron              | IOS        |
+|         6 |       5 | Faizabad            | MongoDB    |
++-----------+---------+---------------------+------------+
+5 rows in set (0.000 sec)
+
+MariaDB [shop]> SELECT *  FROM student
+    -> INNER JOIN technologies
+    -> ON student.StudentID=technologies.StudentID;
++-----------+---------+--------+-----------+-----------+---------+---------------------+------------+
+| StudentID | Fname   | Lname  | City      | StudentID | tech_ID | Name                | technology |
++-----------+---------+--------+-----------+-----------+---------+---------------------+------------+
+|         1 | Devine  | Putin  | France    |         1 |       1 | Java Training Inst. | Java       |
+|         2 | Michael | Clark  | Australia |         2 |       2 | Chroma Campus       | Angular    |
+|         3 | Ethon   | Miller | England   |         3 |       3 | CETPA Infotech      | Big data   |
++-----------+---------+--------+-----------+-----------+---------+---------------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [shop]> SELECT s.studentID, s.Fname, s.Lname, s.City, t.tech_ID, t.Name, t.technology  FROM student s
+    -> INNER JOIN technologies t
+    -> ON s.StudentID=t.StudentID;
++-----------+---------+--------+-----------+---------+---------------------+------------+
+| studentID | Fname   | Lname  | City      | tech_ID | Name                | technology |
++-----------+---------+--------+-----------+---------+---------------------+------------+
+|         1 | Devine  | Putin  | France    |       1 | Java Training Inst. | Java       |
+|         2 | Michael | Clark  | Australia |       2 | Chroma Campus       | Angular    |
+|         3 | Ethon   | Miller | England   |       3 | CETPA Infotech      | Big data   |
++-----------+---------+--------+-----------+---------+---------------------+------------+
+3 rows in set (0.000 sec)
+
+MariaDB [shop]> SELECT s.studentID, s.Fname, s.Lname, s.City, t.tech_ID, t.Name, t.technology  FROM student s
+    -> RIGHT JOIN technologies t
+    -> ON s.StudentID=t.StudentID;
++-----------+---------+--------+-----------+---------+---------------------+------------+
+| studentID | Fname   | Lname  | City      | tech_ID | Name                | technology |
++-----------+---------+--------+-----------+---------+---------------------+------------+
+|         1 | Devine  | Putin  | France    |       1 | Java Training Inst. | Java       |
+|         2 | Michael | Clark  | Australia |       2 | Chroma Campus       | Angular    |
+|         3 | Ethon   | Miller | England   |       3 | CETPA Infotech      | Big data   |
+|      NULL | NULL    | NULL   | NULL      |       4 | Aptron              | IOS        |
+|      NULL | NULL    | NULL   | NULL      |       5 | Faizabad            | MongoDB    |
++-----------+---------+--------+-----------+---------+---------------------+------------+
+5 rows in set (0.000 sec)
+
+MariaDB [shop]> SELECT s.studentID, s.Fname, s.Lname, s.City, t.tech_ID, t.Name, t.technology  FROM student s
+    -> LEFT JOIN technologies t
+    -> ON s.StudentID=t.StudentID;
++-----------+---------+---------+-----------+---------+---------------------+------------+
+| studentID | Fname   | Lname   | City      | tech_ID | Name                | technology |
++-----------+---------+---------+-----------+---------+---------------------+------------+
+|         1 | Devine  | Putin   | France    |       1 | Java Training Inst. | Java       |
+|         2 | Michael | Clark   | Australia |       2 | Chroma Campus       | Angular    |
+|         3 | Ethon   | Miller  | England   |       3 | CETPA Infotech      | Big data   |
+|         4 | Mark    | Strauss | America   |    NULL | NULL                | NULL       |
++-----------+---------+---------+-----------+---------+---------------------+------------+
+4 rows in set (0.000 sec)
+
