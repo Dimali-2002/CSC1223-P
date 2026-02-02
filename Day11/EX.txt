@@ -1,0 +1,27 @@
+airportId VARCHAR(10) PRIMARY KEY,
+name VARCHAR(20),
+city VARCHAR(20));
+
+INSERT INTO Airpor VALUES
+('LHR','Heathrow','London'),
+('LGW','Gatwick','London'),
+('CDG','CDGaulle','Paris'),
+('ORY','Orly','Paris');
+
+CREATE TABLE Flight(
+flightNo VARCHAR(10),
+flightCompany VARCHAR(30),
+depAirport VARCHAR(10),
+arrAirport VARCHAR(10)
+PRIMARY KEY(flightNo,depAirport),
+FOREIGN KEY(depAirport) REFERENCES Airport(airportId),
+FOREIGN KEY(arrAirport) REFERENCES Airport(airportId));
+
+CREATE TABLE Flight(
+flightNo varchar(10),
+flightCompany varchar(30),
+depAirport varchar(10),
+arrAirport varchar(10),
+PRIMARY KEY (flightNo, depAirport),
+FOREIGN KEY (depAirport) REFERENCES Airport(airportId),
+FOREIGN KEY (arrAirport) REFERENCES Airport(airportId));

@@ -1,0 +1,84 @@
+i)
+MariaDB [AirTravel]> SELECT * FROM Booking
+    -> WHERE nationality='British' OR nationality='French';
++----------+--------------+-------------+----------+--------+
+| ticketNo | name         | nationality | flightNo | seatNo |
++----------+--------------+-------------+----------+--------+
+| ABS95833 | Mat Duval    | French      | BA2944   | 10A    |
+| EAG12948 | John Jones   | British     | AF1232   | 12D    |
+| EAG34859 | Pierc Front  | French      | BA2944   | 30D    |
+| ORE39489 | Fiona Kam    | British     | BA4060   | 5D     |
++----------+--------------+-------------+----------+--------+
+4 rows in set (0.000 sec)
+
+ii)
+MariaDB [AirTravel]> SELECT COUNT(flightNo)
+    -> FROM Flight
+    -> WHERE flightCompany = 'AirFrance';
++-----------------+
+| COUNT(flightNo) |
++-----------------+
+|               4 |
++-----------------+
+1 row in set (0.001 sec)
+
+iii)
+MariaDB [AirTravel]> SELECT name, nationality
+    -> FROM Booking
+    -> WHERE name like '%f%';
++--------------+-------------+
+| name         | nationality |
++--------------+-------------+
+| Frase Ewan   | Spanish     |
+| Pierc Front  | French      |
+| Fiona Kam    | British     |
++--------------+-------------+
+3 rows in set (0.000 sec)
+
+iv)
+MariaDB [AirTravel]> SELECT b.name
+    -> FROM Booking b
+    -> JOIN Seat s
+    -> ON s.seatNo=b.seatNo AND s.flightNo=b.flightNo
+    -> WHERE s.class = 'Business'
+    -> ORDER BY b.name DESC;
++-------------+
+| name        |
++-------------+
+| Pierc Front |
+| Mat Duval   |
+| John Jones  |
+| Fiona Kam   |
++-------------+
+4 rows in set (0.011 sec)
+
+v)
+MariaDB [AirTravel]> SELECT Count(*)
+    -> FROM Booking b
+    -> JOIN Flight f ON f.flightNo=b.flightNo
+    -> JOIN Airport a ON a.airportId=f.flightNo
+    -> WHERE a.city='Paris';
++----------+
+| Count(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.003 sec)
+
+vi)
+MariaDB [AirTravel]> SELECT b.name, b.flightNo, f.flightCompany
+    -> FROM Booking b
+    -> JOIN Flight f ON b.flightNo = f.flightNo;
++-------------+----------+-----------------+
+| name        | flightNo | flightCompany   |
++-------------+----------+-----------------+
+| Mat Duval   | BA2944   | British Airways |
+| Frase Ewan  | AF1232   | AirFrance       |
+| John Jones  | AF1232   | AirFrance       |
+| Pierc Front | BA2944   | British Airways |
+| Kare Wood   | BA4059   | British Airways |
+| Fiona Kam   | BA4060   | British Airways |
++-------------+----------+-----------------+
+6 rows in set (0.001 sec)
+
+vii)
