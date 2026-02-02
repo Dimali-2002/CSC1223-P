@@ -1,0 +1,244 @@
+b)
+
+i)
+MariaDB [BFL1]> DESC Venue;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| venue_id     | int(11)     | NO   | PRI | NULL    |       |
+| venue_name   | varchar(30) | YES  |     | NULL    |       |
+| city_name    | varchar(30) | YES  |     | NULL    |       |
+| aud_capacity | int(11)     | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.013 sec)
+
+MariaDB [BFL1]> DESC Team;
++---------+---------+------+-----+---------+-------+
+| Field   | Type    | Null | Key | Default | Extra |
++---------+---------+------+-----+---------+-------+
+| team_id | int(11) | NO   | PRI | NULL    |       |
+| won     | int(11) | YES  |     | NULL    |       |
+| draw    | int(11) | YES  |     | NULL    |       |
+| lost    | int(11) | YES  |     | NULL    |       |
+| points  | int(11) | YES  |     | NULL    |       |
++---------+---------+------+-----+---------+-------+
+5 rows in set (0.012 sec)
+
+MariaDB [BFL1]> DESC Player;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| player_id   | int(11)     | NO   | PRI | NULL    |       |
+| team_id     | int(11)     | YES  | MUL | NULL    |       |
+| player_name | varchar(30) | YES  |     | NULL    |       |
+| DOB         | date        | YES  |     | NULL    |       |
+| age         | int(11)     | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+5 rows in set (0.018 sec)
+
+MariaDB [BFL1]> DESC Matches;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| match_no  | int(11) | NO   | PRI | NULL    |       |
+| play_date | date    | YES  |     | NULL    |       |
+| venue_id  | int(11) | YES  | MUL | NULL    |       |
+| stop1_sec | int(11) | YES  |     | NULL    |       |
+| stop2_sec | int(11) | YES  |     | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+5 rows in set (0.014 sec)
+
+MariaDB [BFL1]> DESC Match_details;
++-----------+---------+------+-----+---------+-------+
+| Field     | Type    | Null | Key | Default | Extra |
++-----------+---------+------+-----+---------+-------+
+| match_no  | int(11) | NO   | PRI | NULL    |       |
+| team_id   | int(11) | NO   | PRI | NULL    |       |
+| player_id | int(11) | NO   | PRI | NULL    |       |
++-----------+---------+------+-----+---------+-------+
+3 rows in set (0.014 sec)
+
+ii)
+MariaDB [BFL1]> SELECT * FROM Venue;
++----------+------------------------+-----------+--------------+
+| venue_id | venue_name             | city_name | aud_capacity |
++----------+------------------------+-----------+--------------+
+|    20001 | Stade de Bordeaux      | Bordeaux  |        42115 |
+|    20002 | Stade Bollaert-Delelis | Lens      |        38223 |
+|    20003 | Stade Pierre Mauroy    | Lille     |        49822 |
+|    20004 | Stade de Lyon          | Lyon      |        58585 |
+|    20005 | Stade VElodrome        | Marseille |        64354 |
+|    20006 | Stade de Nice          | Nice      |        35624 |
+|    20007 | Parc des Princes       | Paris     |        47294 |
++----------+------------------------+-----------+--------------+
+7 rows in set (0.000 sec)
+
+MariaDB [BFL1]> SELECT * FROM Team;
++---------+------+------+------+--------+
+| team_id | won  | draw | lost | points |
++---------+------+------+------+--------+
+|    1201 |    1 |    0 |    2 |      3 |
+|    1202 |    0 |    1 |    2 |      1 |
+|    1203 |    2 |    0 |    1 |      6 |
+|    1204 |    2 |    1 |    0 |      7 |
+|    1205 |    0 |    1 |    2 |      1 |
+|    1206 |    1 |    1 |    1 |      4 |
++---------+------+------+------+--------+
+6 rows in set (0.000 sec)
+
+MariaDB [BFL1]> SELECT * FROM Player;
++-----------+---------+------------------+------------+------+
+| player_id | team_id | player_name      | DOB        | age  |
++-----------+---------+------------------+------------+------+
+|    160001 |    1201 | Etrit Berisha    | 1989-03-10 |   27 |
+|    160008 |    1201 | Andi Lila        | 1986-02-12 |   30 |
+|    160020 |    1201 | Bekin Balaj      | 1991-01-11 |   25 |
+|    160024 |    1202 | Robert Almer     | 1984-03-20 |   32 |
+|    160036 |    1202 | Gyorgy Garics    | 1984-03-08 |   32 |
+|    160056 |    1203 | Thomas Vermaelen | 1985-11-14 |   30 |
+|    160064 |    1203 | Axel Witsel      | 1989-01-12 |   27 |
+|    160070 |    1204 | Lovre Kalinic    | 1990-04-03 |   26 |
+|    160093 |    1205 | Petr Cech        | 1982-05-20 |   34 |
+|    160095 |    1205 | Tomas Vaclik     | 1989-03-29 |   27 |
+|    160102 |    1205 | Marek Suchy      | 1988-03-29 |   28 |
+|    190117 |    1206 | Joe Hart         | 1987-04-19 |   28 |
++-----------+---------+------------------+------------+------+
+12 rows in set (0.000 sec)
+
+MariaDB [BFL1]> SELECT * FROM Matches;
++----------+------------+----------+-----------+-----------+
+| match_no | play_date  | venue_id | stop1_sec | stop2_sec |
++----------+------------+----------+-----------+-----------+
+|        1 | 2016-06-11 |    20007 |       131 |       242 |
+|        2 | 2016-06-12 |    20002 |        61 |       182 |
+|        3 | 2016-06-13 |    20001 |        64 |       268 |
+|        4 | 2016-06-14 |    20005 |         0 |       185 |
++----------+------------+----------+-----------+-----------+
+4 rows in set (0.000 sec)
+
+MariaDB [BFL1]> SELECT * FROM Match_details;
++----------+---------+-----------+
+| match_no | team_id | player_id |
++----------+---------+-----------+
+|        1 |    1203 |    160056 |
+|        1 |    1204 |    160070 |
+|        2 |    1201 |    160001 |
+|        2 |    1205 |    160102 |
+|        3 |    1201 |    160020 |
+|        3 |    1202 |    160036 |
+|        4 |    1203 |    160064 |
+|        4 |    1204 |    160070 |
++----------+---------+-----------+
+8 rows in set (0.000 sec)
+
+iii)
+MariaDB [BFL1]> SELECT * FROM Venue
+    -> WHERE city_name = 'Bordeaux';
++----------+-------------------+-----------+--------------+
+| venue_id | venue_name        | city_name | aud_capacity |
++----------+-------------------+-----------+--------------+
+|    20001 | Stade de Bordeaux | Bordeaux  |        42115 |
++----------+-------------------+-----------+--------------+
+1 row in set (0.000 sec)
+
+iv)
+MariaDB [BFL1]> SELECT player_name, age FROM Player
+    -> WHERE age>30;
++---------------+------+
+| player_name   | age  |
++---------------+------+
+| Robert Almer  |   32 |
+| Gyorgy Garics |   32 |
+| Petr Cech     |   34 |
++---------------+------+
+3 rows in set (0.000 sec)
+
+v)
+MariaDB [BFL1]> SELECT SUM(aud_capacity) AS total_audiance_capacity
+    -> FROM Venue;
++-------------------------+
+| total_audiance_capacity |
++-------------------------+
+|                  336017 |
++-------------------------+
+1 row in set (0.000 sec)
+
+vi)
+MariaDB [BFL1]>  SELECT p.player_name, t.team_id
+    -> FROM Player p
+    -> JOIN Match_details m ON m.player_id = p.player_id
+    -> JOIN Team t ON t.team_id = p.team_id
+    -> WHERE m.match_no = 2;
++---------------+---------+
+| player_name   | team_id |
++---------------+---------+
+| Etrit Berisha |    1201 |
+| Marek Suchy   |    1205 |
++---------------+---------+
+2 rows in set (0.001 sec)
+
+vii)
+MariaDB [BFL1]> SELECT DISTINCT(v.venue_name)
+    -> FROM Venue v
+    -> JOIN Matches m ON m.venue_id=v.venue_id
+    -> JOIN Match_details md ON md.match_no=m.match_no
+    -> WHERE md.team_id= 1204;
++------------------+
+| venue_name       |
++------------------+
+| Parc des Princes |
+| Stade VElodrome  |
++------------------+
+2 rows in set (0.001 sec)
+
+viii)
+MariaDB [BFL1]> SELECT v.venue_name, COUNT(m.match_no)
+    -> FROM Venue v
+    -> JOIN Matches m ON m.venue_id = v.venue_id
+    -> GROUP BY v.venue_id;
++------------------------+-------------------+
+| venue_name             | COUNT(m.match_no) |
++------------------------+-------------------+
+| Stade de Bordeaux      |                 1 |
+| Stade Bollaert-Delelis |                 1 |
+| Stade VElodrome        |                 1 |
+| Parc des Princes       |                 1 |
++------------------------+-------------------+
+4 rows in set (0.001 sec)
+
+ix)
+MariaDB [BFL1]> SELECT m.* FROM Matches m
+    -> WHERE m.venue_id=(
+    ->       SELECT venue_id
+    ->       FROM Venue
+    ->       WHERE  aud_capacity = (
+    ->               SELECT MAX(aud_capacity)
+    ->               FROM Venue));
++----------+------------+----------+-----------+-----------+
+| match_no | play_date  | venue_id | stop1_sec | stop2_sec |
++----------+------------+----------+-----------+-----------+
+|        4 | 2016-06-14 |    20005 |         0 |       185 |
++----------+------------+----------+-----------+-----------+
+1 row in set (0.000 sec)
+
+x)
+MariaDB [BFL1]> SELECT * FROM Team
+    -> WHERE won=0;
++---------+------+------+------+--------+
+| team_id | won  | draw | lost | points |
++---------+------+------+------+--------+
+|    1202 |    0 |    1 |    2 |      1 |
+|    1205 |    0 |    1 |    2 |      1 |
++---------+------+------+------+--------+
+2 rows in set (0.000 sec)
+
+xi)
+MariaDB [BFL1]> SELECT m.* FROM Matches m
+    -> ORDER BY (stop1_sec + stop2_sec) DESC
+    -> LIMIT 1;
++----------+------------+----------+-----------+-----------+
+| match_no | play_date  | venue_id | stop1_sec | stop2_sec |
++----------+------------+----------+-----------+-----------+
+|        1 | 2016-06-11 |    20007 |       131 |       242 |
++----------+------------+----------+-----------+-----------+
+1 row in set (0.000 sec)
